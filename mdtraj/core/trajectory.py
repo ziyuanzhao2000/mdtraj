@@ -1383,7 +1383,7 @@ class Trajectory(object):
         # run the saver, and return whatever output it gives
         return saver(filename, **kwargs)
 
-    def save_hdf5(self, filename, force_overwrite=True):
+    def save_hdf5(self, filename, force_overwrite=True, mode='w'):
         """Save trajectory to MDTraj HDF5 format
 
         Parameters
@@ -1393,7 +1393,7 @@ class Trajectory(object):
         force_overwrite : bool, default=True
             Overwrite anything that exists at filename, if its already there
         """
-        with HDF5TrajectoryFile(filename, 'w', force_overwrite=force_overwrite) as f:
+        with HDF5TrajectoryFile(filename, mode, force_overwrite=force_overwrite) as f:
             f.write(coordinates=in_units_of(self.xyz, Trajectory._distance_unit, f.distance_unit),
                     time=self.time,
                     cell_lengths=in_units_of(self.unitcell_lengths, Trajectory._distance_unit, f.distance_unit),
